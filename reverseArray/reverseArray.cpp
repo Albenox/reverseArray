@@ -1,4 +1,7 @@
 /*
+A program that asks for user input to determine the size of an array, then populates the array with integer values entered by the user
+Afterwards, the program will print the array in the entered order, and print the array in the reverse order
+The program's steps as per listed in the assignment are as follows:
 1. Populate an array with integer values.
 2. Call ReverseArray to dynamically create a reversed copy of the array.
 3. Display the original array.
@@ -6,8 +9,10 @@
 5. Deallocate the dynamically allocated array using delete[].
 */
 
+//Declares functions
 int* ReverseArray(const int arr[], int size);
 void print(const int arr[], int size);
+int intCheck();
 
 //Libraries and namespace std for convinience
 #include <iostream>
@@ -18,9 +23,9 @@ int main()
 	//Declares a variable that sets the capacity of the array
 	int capacity;
 	cout << "Enter the size of the array: ";
-	cin >> capacity;
+	capacity = intCheck();
 
-	//Declares(int*) a pointer called arr that is set to an int array of integers that has a dynamic capacity of the value entered by the user
+	//Declares(int*) a pointer called arr that is set to an int array of integers that has a dynamic capacity of the value entered by the user...
 	//This makes the array reusable after delete[], and so the capacity can be dynamically set based on the user's input
 	int* arr = new int[capacity];
 
@@ -28,10 +33,11 @@ int main()
 	for (int i = 0; i < capacity; i++)
 	{
 		cout << "Enter integer " << i + 1 << ": ";
-		cin >> arr[i];
+		arr[i] = intCheck();
 	}
 	
-	//We are returning reversed, which is just the address to the array new int[size] made in the function, which technically means we are not sending the array back to main, but just the address so it can be found in the memory
+	//We are returning reversed, which is just the address to the array new int[size] made in the function... 
+	//Which technically means we are not sending the array back to main, but just the address so it can be found in the memory
 	int* reversedArr = ReverseArray(arr, capacity);
 	
 	//Prints both the original and reversed arrays
@@ -40,6 +46,10 @@ int main()
 	cout << endl << "The reversed array is: ";
 	print(reversedArr, capacity);
 
+	//Deletes the arrays to free up memory
+	delete[] arr;
+	delete[] reversedArr;
+	
 	return 0;
 }
 
@@ -61,11 +71,30 @@ int* ReverseArray(const int arr[], int size)
 	return reversed;
 }
 
-//print displays the contents of an array.
+//Print displays the contents of an array.
 void print(const int arr[], int size)
 {
 	cout << endl;
+	//For loop that runs through the array a number of times equal to the size of the array
 	for (int i = 0; i < size; i++) {
 		cout << arr[i] << " ";
 	}
+}
+
+//intCheck validates that the user input is an integer and prompts the user to enter a valid integer if the input is invalid. It returns the valid integer input.
+int intCheck() {
+	//Declared int varuiable and asks for user input
+	int input;
+	cin >> input;
+
+	//Checks to see if the input is valid, and loops if it is invalid until a valid integer is entered
+	while (cin.fail()) {
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cout << "Invalid input. Please enter an integer: ";
+		cin >> input;
+	}
+
+	//Returns the valid integer input
+	return input;
 }

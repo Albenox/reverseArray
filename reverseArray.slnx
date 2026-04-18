@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="reverseArray/reverseArray.vcxproj" Id="b54f3b28-796a-48cd-a759-5f0b5e0f8ad1" />
+</Solution>
